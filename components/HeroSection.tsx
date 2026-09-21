@@ -5,7 +5,7 @@ import { Plus } from "lucide-react";
 const HeroSection = () => {
   return (
     <section
-      className="wrapper grid min-h-[190px] grid-cols-1 items-center gap-5 overflow-hidden rounded-[9px] bg-[#f3e4c7] px-5 py-7 pt-28 mb-8  sm:grid-cols-[1fr_1.2fr_1fr] sm:gap-0 sm:px-8 sm:py-5 lg:px-7"
+      className="wrapper mb-8 grid min-h-[190px] grid-cols-1 items-center gap-5 overflow-hidden rounded-[9px] bg-[#f3e4c7] px-5 py-7 pt-28  sm:grid-cols-[1fr_1.2fr_1fr] sm:gap-0 sm:px-8 sm:py-5 lg:px-7"
       aria-labelledby="library-title"
     >
       <div className="relative z-10 flex flex-col items-center text-center sm:items-start sm:text-left">

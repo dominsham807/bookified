@@ -31,7 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
         <ClerkProvider appearance={{ theme: shadcn }}>
           <Navbar />
-          {children}
+          <div className="pt-3">{children}</div>
         </ClerkProvider>
       </body>
     </html>

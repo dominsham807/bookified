@@ -6,9 +6,8 @@ import {
   SignInButton,
   SignUpButton,
   Show,
-    UserButton,
-  useClerk,
-  useUser
+  UserButton,
+  useUser,
 } from "@clerk/nextjs";
 
 const navItems = [
@@ -22,21 +21,26 @@ const Navbar = () => {
     const { user } = useUser();
     
   return (
-    <header className="fixed z-50 w-full bg-[var(--bg-primary)]">
-      <div className="wrapper navbar-height py-4 flex justify-between items-center">
-        <Link href="/" className="flex gap-0.5 items-center">
-          <Image
-            src="/assets/logo.png"
-            alt="Bookified"
-            width={42}
-            height={26}
-          />
-          <span className="logo-text">Bookified</span>
-        </Link>
-        <nav className="w-fit flex gap-7.5 items-center">
+    <header className="fixed z-50 w-full bg-transparent pt-3">
+      <div className="wrapper">
+        <div className="navbar-height flex items-center justify-between rounded-xl bg-white px-5 py-4 shadow-soft-sm">
+          <Link href="/" className="flex gap-0.5 items-center">
+            <Image
+              src="/assets/logo.png"
+              alt="Bookified"
+              width={42}
+              height={26}
+            />
+            <span className="logo-text">Bookified</span>
+          </Link>
+          <nav className="flex w-fit items-center gap-3 sm:gap-5 lg:gap-7.5">
           {navItems.map(({ label, href }) => {
             return (
-              <Link href={href} key={label} className="nav-link-base">
+              <Link
+                href={href}
+                key={label}
+                className={`nav-link-base text-sm sm:text-base ${pathName === href ? "nav-link-active" : ""}`}
+              >
                 {label}
               </Link>
             );
@@ -51,7 +55,7 @@ const Navbar = () => {
             <SignUpButton mode="modal">
               <button
                 type="button"
-                className="nav-btn rounded-full bg-[var(--accent-warm)] px-4 py-2 text-white"
+                className="nav-btn rounded-full bg-[var(--accent-warm)] px-2.5 py-2 text-sm text-white sm:px-4 sm:text-base"
               >
                 Sign up
               </button>
@@ -66,8 +70,9 @@ const Navbar = () => {
                 </Link>
               )}
             </div>
-          </Show>
-        </nav>
+            </Show>
+          </nav>
+        </div>
       </div>
     </header>
   );
