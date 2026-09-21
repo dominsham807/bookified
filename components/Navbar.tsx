@@ -22,7 +22,7 @@ const Navbar = () => {
     const { user } = useUser();
     
   return (
-    <header className="w-full fixed z-50 bg-('--bg-primary')">
+    <header className="fixed z-50 w-full bg-[var(--bg-primary)]">
       <div className="wrapper navbar-height py-4 flex justify-between items-center">
         <Link href="/" className="flex gap-0.5 items-center">
           <Image
@@ -36,7 +36,7 @@ const Navbar = () => {
         <nav className="w-fit flex gap-7.5 items-center">
           {navItems.map(({ label, href }) => {
             return (
-              <Link href={href} key={label}>
+              <Link href={href} key={label} className="nav-link-base">
                 {label}
               </Link>
             );
@@ -44,14 +44,14 @@ const Navbar = () => {
 
           <Show when="signed-out">
             <SignInButton mode="modal">
-              <button type="button" className="text-sm font-medium">
+              <button type="button" className="nav-btn">
                 Sign in
               </button>
             </SignInButton>
             <SignUpButton mode="modal">
               <button
                 type="button"
-                className="rounded-full bg-[var(--accent-warm)] px-4 py-2 text-sm font-medium text-white"
+                className="nav-btn rounded-full bg-[var(--accent-warm)] px-4 py-2 text-white"
               >
                 Sign up
               </button>
