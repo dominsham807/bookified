@@ -3,6 +3,13 @@ import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { MAX_FILE_SIZE } from "@/lib/constants";
 
+/**
+ * Handles authenticated Vercel Blob upload requests.
+ *
+ * The generated client token permits supported PDF and image uploads up to the
+ * configured size limit. An unauthenticated request returns 401; other failures
+ * return 500 with the reported error message.
+ */
 export async function POST(request: Request): Promise<NextResponse> {
     try {
         const { userId } = await auth();

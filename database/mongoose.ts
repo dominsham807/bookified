@@ -16,6 +16,12 @@ let cached =
   global.mongooseCache ||
   (global.mongooseCache = { conn: null, promise: null });
 
+/**
+ * Returns the cached Mongoose connection, sharing an in-flight connection
+ * attempt across callers. A failed attempt is cleared so a later call can retry.
+ *
+ * @throws The error reported by Mongoose when the connection cannot be opened.
+ */
 export const connectToDatabase = async () => {
   if (cached.conn) return cached.conn;
 
