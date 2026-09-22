@@ -28,6 +28,7 @@ type UploadFormValues = z.infer<typeof UploadSchema>;
 const UploadForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { userId, getToken } = useAuth();
+    console.log("User ID:", userId);
     
     const router = useRouter();
 

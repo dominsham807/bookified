@@ -1,12 +1,10 @@
 import BookCard from "@/components/BookCard";
-import HeroSection from "@/components/HeroSection";
-import { sampleBooks } from "@/lib/constants";
+import HeroSection from "@/components/HeroSection"; 
 import { getAllBooks } from "@/lib/actions/book.actions";
 
 export default async function Home() {
     const bookResults = await getAllBooks();
     const books = bookResults.success ? bookResults.books ?? [] : [];
-    console.log(books);
 
   return (
     <main className="wrapper container">
