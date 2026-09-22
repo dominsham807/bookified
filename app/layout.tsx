@@ -1,5 +1,6 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import { shadcn } from "@clerk/ui/themes";
+import { Toaster } from "sonner";
 import type { Metadata } from "next";
 import { IBM_Plex_Serif, Mona_Sans } from "next/font/google";
 import Navbar from "@/components/Navbar";
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <ClerkProvider appearance={{ theme: shadcn }}>
           <Navbar />
           <div className="pt-3">{children}</div>
+          <Toaster /> 
         </ClerkProvider>
       </body>
     </html>
