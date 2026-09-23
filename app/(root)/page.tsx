@@ -2,6 +2,7 @@ import BookCard from "@/components/BookCard";
 import HeroSection from "@/components/HeroSection"; 
 import { getAllBooks } from "@/lib/actions/book.actions";
 
+/** Renders stored books, or an empty library when loading returns a failure. */
 export default async function Home() {
     const bookResults = await getAllBooks();
     const books = bookResults.success ? bookResults.books ?? [] : [];

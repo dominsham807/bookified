@@ -5,6 +5,7 @@ import { generateSlug, serializeData } from "@/lib/utils";
 import { Book } from "@/database/models/book.model";
 import { BookSegment } from "@/database/models/book-segment.model";
 
+/** Returns all books newest first, or a failure result if the query fails. */
 export const getAllBooks = async () => {
     try {
         await connectToDatabase();
@@ -24,33 +25,10 @@ export const getAllBooks = async () => {
     }
 }
 
-export const getBookBySlug = async (slug: string) => {
-    try {
-        await connectToDatabase();
-
-        const book = await Book.findOne({ slug }).lean();
-
-        if (!book) {
-            return {
-                success: false,
-                data: null,
-            };
-        }
-
-        return {
-            success: true,
-            data: serializeData(book),
-        };
-    } catch (e) {
-        console.error("Error fetching book by slug", e);
-        return {
-            success: false,
-            data: null,
-            error: e,
-        };
-    }
-};
-
+/**
+ * Checks for a book whose slug is derived from the supplied title.
+ * Query failures are reported as a negative result.
+ */
 export const checkBookExists = async (title: string) => {
     try {
         await connectToDatabase();
@@ -76,6 +54,10 @@ export const checkBookExists = async (title: string) => {
     }
 }
 
+/**
+ * Creates a book with a title-derived slug, or returns the existing book that
+ * already uses that slug. Database errors are returned as failure results.
+ */
 export const createBook = async (data: CreateBook) => {
   try {
     await connectToDatabase();
@@ -108,6 +90,11 @@ export const createBook = async (data: CreateBook) => {
   }
 };
 
+/**
+ * Persists parsed segments and updates the book's segment count.
+ * If either operation fails, cleanup attempts to delete the book and its
+ * segments. Cleanup errors propagate instead of being converted to a result.
+ */
 export const saveBookSegments = async (bookId: string, clerkId: string, segments: TextSegment[]) => {
     try {
         await connectToDatabase();

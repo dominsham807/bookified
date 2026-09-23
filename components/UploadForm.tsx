@@ -45,6 +45,11 @@ const UploadForm = () => {
     },
   });
 
+    /**
+     * Submits an authenticated book upload and reports failures to the user.
+     * A duplicate detected before upload redirects to the existing book; a
+     * successful upload redirects to the home page.
+     */
     const handleSubmit = async (data: UploadFormValues) => {
         if (!userId) {
             return toast.error("Please login to upload books");
