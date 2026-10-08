@@ -1,5 +1,6 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import { shadcn } from "@clerk/ui/themes";
+import { Toaster } from "sonner";
 import type { Metadata } from "next";
 import { IBM_Plex_Serif, Mona_Sans } from "next/font/google";
 import Navbar from "@/components/Navbar";
@@ -23,17 +24,22 @@ export const metadata: Metadata = {
   description: "Transform your books into interactive AI conversations. Upload PDFs, and chat with your books using voice.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="en">
-      <body
-        className={`${ibmPlexSerif.variable} ${monaSans.variable} relative font-sans antialiased`}
+    <ClerkProvider appearance={{ theme: shadcn }}>
+      <html lang="en">
+        <body
+          className={`${ibmPlexSerif.variable} ${monaSans.variable} relative font-sans antialiased`}
         >
-        <ClerkProvider appearance={{ theme: shadcn }}>
           <Navbar />
           <div className="pt-3">{children}</div>
-        </ClerkProvider>
-      </body>
-    </html>
+          <Toaster />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
