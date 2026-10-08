@@ -48,7 +48,7 @@ const Navbar = () => {
 
           <Show when="signed-out">
             <SignInButton mode="modal">
-              <button type="button" className="nav-btn">
+              <button type="button" className="nav-btn text-black">
                 Sign in
               </button>
             </SignInButton>

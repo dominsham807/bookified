@@ -4,6 +4,7 @@ import { connectToDatabase } from "@/database/mongoose";
 import { generateSlug, serializeData } from "@/lib/utils";
 import { Book } from "@/database/models/book.model";
 import { BookSegment } from "@/database/models/book-segment.model";
+import { Types } from "mongoose";
 
 /** Returns all books newest first, or a failure result if the query fails. */
 export const getAllBooks = async () => {
@@ -25,6 +26,10 @@ export const getAllBooks = async () => {
     }
 }
 
+/**
+ * Checks for a book whose slug is derived from the supplied title.
+ * Query failures are reported as a negative result.
+ */
 export const getBookBySlug = async (slug: string) => {
     try {
         await connectToDatabase();
@@ -145,6 +150,7 @@ export const saveBookSegments = async (bookId: string, clerkId: string, segments
                 segmentsCreated: segments.length
             }
         }
+
     } catch (e) {
         console.error("Error saving book segments", e);
 
@@ -156,4 +162,31 @@ export const saveBookSegments = async (bookId: string, clerkId: string, segments
             error: e,
         }
     }
-}
+};
+
+export const searchBookSegments = async (
+  bookId: string,
+  query: string,
+  numberOfSegments: number,
+) => {
+  if (!Types.ObjectId.isValid(bookId)) {
+    throw new Error("A valid book ID is required");
+  }
+  if (!query.trim()) {
+    throw new Error("A search query is required");
+  }
+  if (!Number.isInteger(numberOfSegments) || numberOfSegments < 1) {
+    throw new Error("The number of segments must be a positive integer");
+  }
+
+  await connectToDatabase();
+
+  return BookSegment.find(
+    { bookId, $text: { $search: query } },
+    { score: { $meta: "textScore" } },
+  )
+    .sort({ score: { $meta: "textScore" } })
+    .limit(numberOfSegments)
+    .select("segmentIndex content")
+    .lean();
+};
