@@ -18,6 +18,25 @@ const VapiControls = ({ book }: { book: IBook }) => {
     clearError,
   } = useVapi(book);
 
+       const formatDuration = (seconds: number) => {
+         const mins = Math.floor(seconds / 60);
+         const secs = seconds % 60;
+         return `${mins}:${secs.toString().padStart(2, "0")}`;
+    };
+    
+    const getStatusDisplay = () => {
+        switch (status) {
+            case 'connecting': return { label: 'Connecting...', color: 'vapi-status-dot-connecting' };
+            case 'starting': return { label: 'Starting...', color: 'vapi-status-dot-starting' };
+            case 'listening': return { label: 'Listening', color: 'vapi-status-dot-listening' };
+            case 'thinking': return { label: 'Thinking...', color: 'vapi-status-dot-thinking' };
+            case 'speaking': return { label: 'Speaking', color: 'vapi-status-dot-speaking' };
+            default: return { label: 'Ready', color: 'vapi-status-dot-ready' };
+        }
+    };
+
+    const statusDisplay = getStatusDisplay();
+
   return (
     <>
       <div className="mx-auto flex flex-col gap-8">
@@ -63,8 +82,8 @@ const VapiControls = ({ book }: { book: IBook }) => {
 
             <div className="flex flex-wrap gap-3">
               <div className="vapi-status-indicator">
-                {/* <span className={`vapi-status-dot ${statusDisplay.color}`} />
-                <span className="vapi-status-text">{statusDisplay.label}</span> */}
+                <span className={`vapi-status-dot ${statusDisplay.color}`} />
+                <span className="vapi-status-text">{statusDisplay.label}</span>
               </div>
 
               <div className="vapi-status-indicator">
@@ -75,8 +94,8 @@ const VapiControls = ({ book }: { book: IBook }) => {
 
               <div className="vapi-status-indicator">
                 <span className="vapi-status-text">
-                  {/* {formatDuration(duration)}/
-                  {formatDuration(maxDurationSeconds)} */}
+                  {formatDuration(duration)}/
+                  {/* {formatDuration(maxDurationSeconds)} */}
                 </span>
               </div>
             </div>

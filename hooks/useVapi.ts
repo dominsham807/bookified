@@ -67,7 +67,10 @@ export function useVapi(book: IBook) {
   const isStoppingRef = useRef(false);
 
   // Keep refs in sync with latest values for use in callbacks
-  // const maxDurationRef = useLatestRef(limits.maxSessionMinutes * 60);
+    // const maxDurationSeconds = limits?.maxDurationPerSession
+    //   ? limits.maxDurationPerSession * 60
+    //   : 15 * 60;
+    // const maxDurationRef = useLatestRef(maxDurationSeconds);
   const durationRef = useLatestRef(duration);
   const voice = book.persona || DEFAULT_VOICE;
 
